@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class Player : MovableByInput
 {
@@ -11,6 +12,9 @@ public class Player : MovableByInput
     [SerializeField]
     private Spear bottomSpear;
 
+    [SerializeField]
+    private Text gainScore;
+
     [Space(10)]
 
     [SerializeField]
@@ -19,6 +23,7 @@ public class Player : MovableByInput
     private float diveTurnSpeed = 2f;
     [SerializeField]
     private float cannonprimeDuration = 2f;
+
 
     private bool _fullySubmerged = false;
     public bool fullySubmerged
@@ -129,6 +134,13 @@ public class Player : MovableByInput
                 GameManager.Instance.BoatReference.lockInput = false;
             }
         );
+        
+    }
+
+    public void GainFish(fishBehavior fish)
+    {
+        int score = fish.value;
+        gainScore.DOFade(1f, 0.5f);
         
     }
 }

@@ -31,23 +31,34 @@ public class PlayerCamera : MonoBehaviour {
         else if (GameManager.Instance.PlayerReference.currentlyDiving && !GameManager.Instance.PlayerReference.fullySubmerged){
             snapPlayerUp();
         }
-        else
-        {
+        else{
             smoothPlayer();
         }
     }
 
     void snapPlayerUp(){
-        transform.position = new Vector3(0, Mathf.Clamp(playerPosition.y - 11, minY, maxY), -10);
+        if (GameManager.Instance.PlayerReference.cannonprimeDuration > 0 && GameManager.Instance.PlayerReference.rigidBody.velocity == new Vector2(0,0)){
+            Vector3 goToPos = Vector3.SmoothDamp(transform.position, player.position + new Vector3(0, -11, 0), ref velocity, smoothTime);
+            transform.position = new Vector3(0, Mathf.Clamp(goToPos.y, minY, maxY), -10);
+        }
+        else{
+            transform.position = new Vector3(0, Mathf.Clamp(playerPosition.y - 11, minY, maxY), -10);
+        }
     }
 
     void snapPlayerDown()
     {
-        transform.position = new Vector3(0, Mathf.Clamp(playerPosition.y + 11, minY, maxY), -10);
+        if (GameManager.Instance.PlayerReference.cannonprimeDuration > 0 && GameManager.Instance.PlayerReference.rigidBody.velocity == new Vector2(0, 0)){
+            Vector3 goToPos = Vector3.SmoothDamp(transform.position, player.position + new Vector3(0, 11, 0), ref velocity, smoothTime);
+            transform.position = new Vector3(0, Mathf.Clamp(goToPos.y, minY, maxY), -10);
+        }
+        else{
+            transform.position = new Vector3(0, Mathf.Clamp(playerPosition.y + 11, minY, maxY), -10);
+        }
     }
 
     void smoothPlayer(){
-            Vector3 goToPos = Vector3.SmoothDamp(transform.position, player.position, ref velocity, smoothTime);
-            transform.position = new Vector3(0, Mathf.Clamp(goToPos.y, minY, maxY), -10);
+        Vector3 goToPos = Vector3.SmoothDamp(transform.position, player.position, ref velocity, smoothTime);
+        transform.position = new Vector3(0, Mathf.Clamp(goToPos.y, minY, maxY), -10);
     }
 }

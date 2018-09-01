@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Player : MovableByInput
 {
     [SerializeField]
     private float divingVelocity = 30f;
-
+    [SerializeField]
+    private float diveTurnSpeed = 2f;
     [SerializeField]
     private float cannonprimeDuration = 2f;
 
@@ -21,7 +23,7 @@ public class Player : MovableByInput
         }
     }
 
-    private Coroutine currentlyDiving = null;
+    private bool currentlyDiving = false;
 
     private SpriteRenderer spriteRenderer;
 
@@ -46,37 +48,38 @@ public class Player : MovableByInput
         Vector3 input_direction = GetInputDirection();
 
         //Dive button
-        if (Input.GetKey(KeyCode.Z) && currentlyDiving == null)
+        if (Input.GetKey(KeyCode.Z) && !currentlyDiving)
         {
             if (fullySubmerged)
-                currentlyDiving = StartCoroutine(BackToSurfaceProcess(divingVelocity));
+                StartCoroutine(BackToSurfaceProcess(divingVelocity));
             else
-                currentlyDiving = StartCoroutine(DivingProcess(divingVelocity));
+                StartCoroutine(DivingProcess(divingVelocity));
 
             return;
         }
 
         //Diving inputs
-        if (currentlyDiving != null)
+        if (currentlyDiving)
         {
             input_direction.y = 0;
-            ForceInDirection(input_direction, Speed / 2f);
+            ForceInDirection(input_direction, diveTurnSpeed);
             return;
         }
 
-        if (!fullySubmerged || currentlyDiving != null)
+        if (!fullySubmerged || currentlyDiving)
             return;
 
-        //Diving
+        //Move in all directions
         MoveInDirection(input_direction);
 
     }
 
     private IEnumerator DivingProcess(float velocity)
     {
+        currentlyDiving = true;
         GameManager.Instance.BoatReference.lockInput = true;
         yield return new WaitForSeconds(cannonprimeDuration);
-        transform.position = -transform.up * 1;
+        transform.position = transform.position + (Vector3.down * 2);
         rigidBody.isKinematic = false;
         rigidBody.gravityScale = 1f;
 
@@ -85,20 +88,35 @@ public class Player : MovableByInput
 
     private IEnumerator BackToSurfaceProcess(float velocity)
     {
+        currentlyDiving = true;
+        GameManager.Instance.BoatReference.boxCollider.enabled = false;
+        yield return new WaitForSeconds(cannonprimeDuration);
         GameManager.Instance.BoatReference.lockInput = true;
         rigidBody.gravityScale = -1f;
         rigidBody.isKinematic = false;
 
         ForceInDirection(transform.up, velocity);
-
-        HaltDivingProcess();
-        rigidBody.gravityScale = 1f;
     }
 
     public void HaltDivingProcess()
     {
-        currentlyDiving = null;
+        currentlyDiving = false;
         fullySubmerged = true;
         rigidBody.gravityScale = 0f;
+    }
+
+    public void HaltBackToSurfaceProcess()
+    {
+        currentlyDiving = false;
+        fullySubmerged = false;
+        rigidBody.gravityScale = 0f;
+        GameManager.Instance.BoatReference.boxCollider.enabled = true;
+        transform.DOMove(GameManager.Instance.BoatReference.playerPosition.position, 2f)
+            .OnComplete(() =>
+            {
+                GameManager.Instance.BoatReference.lockInput = false;
+            }
+        );
+        
     }
 }

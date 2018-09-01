@@ -41,6 +41,6 @@ public class Movable : MonoBehaviour
         if (speed == -1f)
             speed = Speed;
 
-        rigidBody.AddForce(direction * Speed, ForceMode2D.Impulse);
+        rigidBody.AddForce(direction * speed, ForceMode2D.Impulse);
     }
 }

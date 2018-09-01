@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Boat : MovableByInput
 {
+    public Transform playerPosition;
+
     // Update is called once per frame
     void Update()
     {

@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class EndDiving : MonoBehaviour {
 
+    [SerializeField]
+    private bool below = true;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<Player>().HaltDivingProcess();
+            if (below)
+                collision.gameObject.GetComponent<Player>().HaltDivingProcess();
+            else
+                collision.gameObject.GetComponent<Player>().HaltBackToSurfaceProcess();
         }
     }
 }

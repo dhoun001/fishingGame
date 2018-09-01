@@ -6,6 +6,14 @@ using DG.Tweening;
 public class Player : MovableByInput
 {
     [SerializeField]
+    private Spear topSpear;
+
+    [SerializeField]
+    private Spear bottomSpear;
+
+    [Space(10)]
+
+    [SerializeField]
     private float divingVelocity = 30f;
     [SerializeField]
     private float diveTurnSpeed = 2f;
@@ -23,7 +31,7 @@ public class Player : MovableByInput
         }
     }
 
-    private bool currentlyDiving = false;
+    public bool currentlyDiving = false;
 
     private SpriteRenderer spriteRenderer;
 
@@ -79,6 +87,7 @@ public class Player : MovableByInput
         currentlyDiving = true;
         GameManager.Instance.BoatReference.lockInput = true;
         yield return new WaitForSeconds(cannonprimeDuration);
+        bottomSpear.gameObject.SetActive(true);
         transform.position = transform.position + (Vector3.down * 2);
         rigidBody.isKinematic = false;
         rigidBody.gravityScale = 1f;
@@ -91,6 +100,7 @@ public class Player : MovableByInput
         currentlyDiving = true;
         GameManager.Instance.BoatReference.boxCollider.enabled = false;
         yield return new WaitForSeconds(cannonprimeDuration);
+        topSpear.gameObject.SetActive(true);
         GameManager.Instance.BoatReference.lockInput = true;
         rigidBody.gravityScale = -1f;
         rigidBody.isKinematic = false;
@@ -100,6 +110,7 @@ public class Player : MovableByInput
 
     public void HaltDivingProcess()
     {
+        bottomSpear.gameObject.SetActive(false);
         currentlyDiving = false;
         fullySubmerged = true;
         rigidBody.gravityScale = 0f;
@@ -107,11 +118,12 @@ public class Player : MovableByInput
 
     public void HaltBackToSurfaceProcess()
     {
+        topSpear.gameObject.SetActive(false);
         currentlyDiving = false;
         fullySubmerged = false;
         rigidBody.gravityScale = 0f;
         GameManager.Instance.BoatReference.boxCollider.enabled = true;
-        transform.DOMove(GameManager.Instance.BoatReference.playerPosition.position, 2f)
+        transform.DOMove(GameManager.Instance.BoatReference.playerPosition.position, 0.75f)
             .OnComplete(() =>
             {
                 GameManager.Instance.BoatReference.lockInput = false;

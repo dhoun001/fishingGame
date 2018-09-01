@@ -56,6 +56,11 @@ public class fishBehavior : MonoBehaviour {
         StartCoroutine(DeactivateSoonish());
     }
 
+    private void OnDisable()
+    {
+        setStart();
+    }
+
     private IEnumerator DeactivateSoonish()
     {
         yield return new WaitForSeconds(30f);

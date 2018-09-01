@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+/// <summary>
+/// Put global references here
+/// </summary>
+public class GameManager : Singleton<GameManager>
+{
+    [SerializeField]
+    private Sprite WaterLevel;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    [HideInInspector]
+    public Player PlayerReference;
+
+    private void Awake()
+    {
+        PlayerReference = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+    }
+
 }

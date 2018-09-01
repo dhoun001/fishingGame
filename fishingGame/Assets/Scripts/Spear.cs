@@ -9,8 +9,8 @@ public class Spear : MonoBehaviour
         if (collision.gameObject.tag == "Fish")
         {
             fishBehavior fish = collision.gameObject.GetComponent<fishBehavior>();
-            GameManager.Instance.UpdateScore(fish.value);
             fish.gameObject.SetActive(false);
+            GameManager.Instance.PlayerReference.GainFish(fish);
         }
     }
 }

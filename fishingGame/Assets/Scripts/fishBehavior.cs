@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class fishBehavior : MonoBehaviour {
 
+    public int value = 10;
+
     private bool isRight;
     private float speed;
     private int cameraHeight;

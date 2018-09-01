@@ -40,11 +40,13 @@ public class fishBehavior : MonoBehaviour {
         {
             gameObject.transform.position = new Vector3(10, Random.Range(2, cameraHeight) * -1, 80);
             isRight = false;
+            gameObject.GetComponent<SpriteRenderer>().flipX = false;
         }
         else
         {
             gameObject.transform.position = new Vector3(-10, Random.Range(2, cameraHeight) * -1, 80);
             isRight = true;
+            gameObject.GetComponent<SpriteRenderer>().flipX = true;
         }
         speed = Random.Range(0.5f, 1.0f);
     }

@@ -137,7 +137,7 @@ Transform:
   m_GameObject: {fileID: 1094266974506944}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4915069568006458}
   m_RootOrder: 2
@@ -150,7 +150,7 @@ Transform:
   m_GameObject: {fileID: 1195275765224960}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4915069568006458}
   m_RootOrder: 1
@@ -366,9 +366,10 @@ MonoBehaviour:
   bottomSpear: {fileID: 114671032652629058}
   gainScore: {fileID: 114520389305724124}
   currentFish: {fileID: 0}
-  maxFishCapacity: 15
+  maxFishCapacity: 50
   swingSpearDuration: 0.15
   lengthHitbox: 0.75
+  gravityShiftDifference: 0.25
   divingVelocity: 12
   diveTurnSpeed: 1
   cannonprimeDuration: 1
@@ -493,7 +494,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 35
   m_TargetDisplay: 0
 --- !u!224 &224353922799936024
 RectTransform:

@@ -43,6 +43,9 @@ public class Player : MovableByInput
     [Space(10)]
 
     [SerializeField]
+    private float gravityShiftDifference = 0.75f;
+
+    [SerializeField]
     private float divingVelocity = 30f;
     [SerializeField]
     private float diveTurnSpeed = 2f;
@@ -161,7 +164,7 @@ public class Player : MovableByInput
         bottomSpear.gameObject.SetActive(true);
         transform.position = transform.position + (Vector3.down * 2);
         rigidBody.isKinematic = false;
-        rigidBody.gravityScale = 1f;
+        rigidBody.gravityScale = gravityShiftDifference;
 
         ForceInDirection(-transform.up, velocity);
     }
@@ -174,7 +177,7 @@ public class Player : MovableByInput
         yield return new WaitForSeconds(cannonprimeDuration);
         topSpear.gameObject.SetActive(true);
         GameManager.Instance.BoatReference.lockInput = true;
-        rigidBody.gravityScale = -1f;
+        rigidBody.gravityScale = -gravityShiftDifference;
         rigidBody.isKinematic = false;
 
         ForceInDirection(transform.up, velocity);
@@ -195,7 +198,7 @@ public class Player : MovableByInput
         fullySubmerged = false;
         rigidBody.gravityScale = 0f;
         GameManager.Instance.BoatReference.boxCollider.enabled = true;
-        transform.DOMove(GameManager.Instance.BoatReference.playerPosition.position, 0.75f)
+        transform.DOMove(GameManager.Instance.BoatReference.playerPosition.position, 2f)
             .OnComplete(() =>
             {
                 GameManager.Instance.BoatReference.lockInput = false;
@@ -207,14 +210,15 @@ public class Player : MovableByInput
                 currentNumberOfFish = 0;
                 currentFish.text = currentNumberOfFish + " / " + maxFishCapacity + " Capacity \n $" + currentFishValue;
             }
-        );
+
+        )
+        .SetEase(Ease.InExpo);
         
     }
 
     public bool isFullCapacity { get { return currentNumberOfFish >= maxFishCapacity; } }
 
-    bool showingText = false;
-    bool cancel_tween = false;
+    private Coroutine isShowingFishScore = null;
     public void GainFish(fishBehavior fish)
     {
         //Update carried fish
@@ -224,31 +228,55 @@ public class Player : MovableByInput
             currentFishValue += fish.value;
             currentFish.text = currentNumberOfFish + " / " + maxFishCapacity + " Capacity \n $" + currentFishValue;
 
-            if (showingText)
+            if (showFishScore != null)
             {
-                cancel_tween = true;
+                gainScore.DOFade(0f, 0.0f);
+                StopCoroutine(showFishScore);
             }
-            showingText = true;
             //UI
-            int score = fish.value;
-            gainScore.text = "+ $" + fish.value;
-            gainScore.DOFade(0f, 0.0f);
-            gainScore.DOFade(1f, 0.5f);
-            Vector2 original_loc = gainScore.transform.position;
-            gainScore.transform.position = gainScore.transform.position * (Vector2.down * 5);
-            Vector2 end_pos = gainScore.transform.position;
-            gainScore.transform.DOMove(original_loc, 0.5f)
-                .OnComplete(()=>
-                {
-                    if (!cancel_tween)
-                    {
-                        gainScore.transform.DOMove(end_pos, 0.5f);
-                        gainScore.DOFade(0f, 0.5f);
-                    }
-                    showingText = false;
-                });
+            showFishScore = StartCoroutine(ShowFishScoreAbovePlayer(fish));
 
         }
 
+    }
+
+    private Coroutine showFishScore;
+
+    private IEnumerator ShowFishScoreAbovePlayer(fishBehavior fish)
+    {
+        int score = fish.value;
+        gainScore.text = "+ $" + fish.value;
+        gainScore.DOFade(0f, 0.0f);
+        gainScore.DOFade(1f, 0.5f);
+
+        yield return new WaitForSeconds(1f);
+
+        gainScore.DOFade(0f, 0.5f);
+    }
+
+    //Reset player if dead
+    public void ResetPlayer()
+    {
+        StartCoroutine(ResettingPlayer());
+    }
+
+    private IEnumerator ResettingPlayer()
+    {
+        lockInput = true;
+        spriteRenderer.enabled = false;
+        yield return new WaitForSeconds(3f);
+        transform.position = GameManager.Instance.BoatReference.playerPosition.position;
+        spriteRenderer.enabled = true;
+        currentFishValue = 0;
+        currentNumberOfFish = 0;
+        topSpear.gameObject.SetActive(false);
+        bottomSpear.gameObject.SetActive(false);
+        topSpear.gameObject.SetActive(false);
+        currentlyDiving = false;
+        fullySubmerged = false;
+        rigidBody.gravityScale = 0f;
+        GameManager.Instance.BoatReference.boxCollider.enabled = true;
+        lockInput = false;
+        GameManager.Instance.BoatReference.lockInput = false;
     }
 }

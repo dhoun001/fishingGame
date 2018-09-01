@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class Player : MovableByInput
 {
     [SerializeField]
+    private Spear sideSpear;
+
+    [SerializeField]
     private Spear topSpear;
 
     [SerializeField]
@@ -27,12 +30,26 @@ public class Player : MovableByInput
 
     private int currentFishValue = 0;
 
+    [Space(10)]
+
+    [SerializeField]
+    private float swingSpearDuration = 1f;
+
+    [SerializeField]
+    private float lengthHitbox = 3f;
+
+    private Vector3 originalSideSpearPos;
+
+    [Space(10)]
+
     [SerializeField]
     private float divingVelocity = 30f;
     [SerializeField]
     private float diveTurnSpeed = 2f;
     [SerializeField]
     private float cannonprimeDuration = 2f;
+
+    private Vector2 facingDirection = Vector2.right;
 
     private bool _fullySubmerged = false;
     public bool fullySubmerged
@@ -54,6 +71,7 @@ public class Player : MovableByInput
         base.Awake();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+        originalSideSpearPos = sideSpear.transform.localPosition;
     }
 
     protected void Start()
@@ -80,6 +98,18 @@ public class Player : MovableByInput
             return;
         }
 
+        //Determine facing direction
+        if (input_direction.x > 0)
+        {
+            facingDirection = Vector2.right;
+            spriteRenderer.flipX = false;
+        }
+        else if (input_direction.x < 0)
+        {
+            facingDirection = Vector2.left;
+            spriteRenderer.flipX = true;
+        }
+
         //Diving inputs
         if (currentlyDiving)
         {
@@ -94,6 +124,33 @@ public class Player : MovableByInput
         //Move in all directions
         MoveInDirection(input_direction);
 
+        //Swing spear
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            if (SwingingSpear != null)
+            {
+                sideSpear.transform.localPosition = originalSideSpearPos;
+                StopCoroutine(SwingingSpear);
+            }
+
+            SwingingSpear = StartCoroutine(SwingSpear());
+        }
+
+
+    }
+
+    private Coroutine SwingingSpear = null;
+    private IEnumerator SwingSpear()
+    {
+        sideSpear.gameObject.SetActive(true);
+
+        //sideSpear.transform.DOMove(sideSpear.transform.position + (Vector3.right * lengthHitbox), swingSpearDuration);
+
+        sideSpear.transform.localPosition = new Vector3(facingDirection.x, sideSpear.transform.localPosition.y, sideSpear.transform.localPosition.z);
+
+        yield return new WaitForSeconds(swingSpearDuration);
+        sideSpear.transform.localPosition = originalSideSpearPos;
+        sideSpear.gameObject.SetActive(false);
     }
 
     private IEnumerator DivingProcess(float velocity)
@@ -111,6 +168,7 @@ public class Player : MovableByInput
 
     private IEnumerator BackToSurfaceProcess(float velocity)
     {
+
         currentlyDiving = true;
         GameManager.Instance.BoatReference.boxCollider.enabled = false;
         yield return new WaitForSeconds(cannonprimeDuration);
@@ -147,6 +205,7 @@ public class Player : MovableByInput
 
                 currentFishValue = 0;
                 currentNumberOfFish = 0;
+                currentFish.text = currentNumberOfFish + " / " + maxFishCapacity + " Capacity \n $" + currentFishValue;
             }
         );
         
@@ -154,6 +213,8 @@ public class Player : MovableByInput
 
     public bool isFullCapacity { get { return currentNumberOfFish >= maxFishCapacity; } }
 
+    bool showingText = false;
+    bool cancel_tween = false;
     public void GainFish(fishBehavior fish)
     {
         //Update carried fish
@@ -162,8 +223,12 @@ public class Player : MovableByInput
             currentNumberOfFish++;
             currentFishValue += fish.value;
             currentFish.text = currentNumberOfFish + " / " + maxFishCapacity + " Capacity \n $" + currentFishValue;
-            fish.gameObject.SetActive(false);
 
+            if (showingText)
+            {
+                cancel_tween = true;
+            }
+            showingText = true;
             //UI
             int score = fish.value;
             gainScore.text = "+ $" + fish.value;
@@ -171,7 +236,18 @@ public class Player : MovableByInput
             gainScore.DOFade(1f, 0.5f);
             Vector2 original_loc = gainScore.transform.position;
             gainScore.transform.position = gainScore.transform.position * (Vector2.down * 5);
-            gainScore.transform.DOMove(original_loc, 0.5f);
+            Vector2 end_pos = gainScore.transform.position;
+            gainScore.transform.DOMove(original_loc, 0.5f)
+                .OnComplete(()=>
+                {
+                    if (!cancel_tween)
+                    {
+                        gainScore.transform.DOMove(end_pos, 0.5f);
+                        gainScore.DOFade(0f, 0.5f);
+                    }
+                    showingText = false;
+                });
+
         }
 
     }

@@ -15,17 +15,21 @@ public class PlayerCamera : MonoBehaviour {
     public float maxY;
 
     private Vector3 playerPosition;
-
     // Use this for initialization
     void Start () {
         player = GameManager.Instance.PlayerReference.gameObject.transform;
-	}
+        playerPosition = player.TransformPoint(new Vector3(0, playerY, -10));
+        transform.position = new Vector3(0, Mathf.Clamp(playerPosition.y, minY, maxY), -10);
+    }
 
     void Update()
     {
         playerPosition = player.TransformPoint(new Vector3(0, playerY, -10));
-        if (GameManager.Instance.PlayerReference.currentlyDiving){
-            snapPlayer();
+        if (GameManager.Instance.PlayerReference.currentlyDiving && GameManager.Instance.PlayerReference.fullySubmerged){
+            snapPlayerDown();
+        }
+        else if (GameManager.Instance.PlayerReference.currentlyDiving && !GameManager.Instance.PlayerReference.fullySubmerged){
+            snapPlayerUp();
         }
         else
         {
@@ -33,12 +37,17 @@ public class PlayerCamera : MonoBehaviour {
         }
     }
 
-    void snapPlayer(){
-        transform.position = new Vector3(Mathf.Clamp(playerPosition.x, minX, maxX), Mathf.Clamp(playerPosition.y, minY, maxY), -10);
+    void snapPlayerUp(){
+        transform.position = new Vector3(0, Mathf.Clamp(playerPosition.y - 11, minY, maxY), -10);
+    }
+
+    void snapPlayerDown()
+    {
+        transform.position = new Vector3(0, Mathf.Clamp(playerPosition.y + 11, minY, maxY), -10);
     }
 
     void smoothPlayer(){
-        Vector3 goToPos = Vector3.SmoothDamp(transform.position, playerPosition, ref velocity, smoothTime);
-        transform.position = new Vector3(Mathf.Clamp(goToPos.x, minX, maxX), Mathf.Clamp(goToPos.y, minY, maxY), goToPos.z);
+            Vector3 goToPos = Vector3.SmoothDamp(transform.position, player.position, ref velocity, smoothTime);
+            transform.position = new Vector3(0, Mathf.Clamp(goToPos.y, minY, maxY), -10);
     }
 }

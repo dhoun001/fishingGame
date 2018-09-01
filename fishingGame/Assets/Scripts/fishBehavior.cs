@@ -21,8 +21,13 @@ public class fishBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        Debug.Log(isRight);
+        Debug.Log(speed);
 		if(isRight != true){
-            fishRb.MovePosition(fishRb.position * speed * Time.deltaTime);
+            fishRb.velocity = new Vector3(speed * -1, 0, 0);
+        }
+        else{
+            fishRb.velocity = new Vector3(speed, 0, 0);
         }
 	}
 

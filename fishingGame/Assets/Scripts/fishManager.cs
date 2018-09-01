@@ -20,7 +20,7 @@ public class fishManager : MonoBehaviour {
     }
 
     void createFish () {
-        totalTime = Random.Range(1.5f, 3f);
+        totalTime = Random.Range(0.2f, 0.5f);
         fishPool.RetrieveCopy();
     }
 }

@@ -64,5 +64,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjToPool: {fileID: 1599131152608652, guid: 778acd43d368f2c4e8081dd04ab54a2b, type: 2}
-  NumberOfCopies: 30
+  NumberOfCopies: 1000
   _StorageArea: {fileID: 4181826818723126}

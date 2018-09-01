@@ -14,7 +14,7 @@ public class fishBehavior : MonoBehaviour {
 
     void Awake()
     {
-        cameraHeight = 9;
+        cameraHeight = 569;
         fishRb = gameObject.GetComponent<Rigidbody2D>();
         setStart();
     }
@@ -38,12 +38,12 @@ public class fishBehavior : MonoBehaviour {
     {
         if (Random.Range(0, 2) != 0)
         {
-            gameObject.transform.position = new Vector3(7, Random.Range(0, cameraHeight) - 4, 80);
+            gameObject.transform.position = new Vector3(10, Random.Range(2, cameraHeight) * -1, 80);
             isRight = false;
         }
         else
         {
-            gameObject.transform.position = new Vector3(-7, Random.Range(0, cameraHeight) - 4, 80);
+            gameObject.transform.position = new Vector3(-10, Random.Range(2, cameraHeight) * -1, 80);
             isRight = true;
         }
         speed = Random.Range(0.5f, 1.0f);

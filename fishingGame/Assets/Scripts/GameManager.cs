@@ -12,10 +12,13 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector]
     public Player PlayerReference;
+    [HideInInspector]
+    public Boat BoatReference;
 
     private void Awake()
     {
         PlayerReference = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        BoatReference = GameObject.FindGameObjectWithTag("Boat").GetComponent<Boat>();
     }
 
 }

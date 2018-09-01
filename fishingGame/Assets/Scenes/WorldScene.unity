@@ -1084,14 +1084,10 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
-    - target: {fileID: 114629198654989026, guid: b01358a59f6f9c148a8f73ab74bbfc48,
+    - target: {fileID: 223035345967032948, guid: b01358a59f6f9c148a8f73ab74bbfc48,
         type: 2}
-      propertyPath: swingSpearDuration
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1619121190846654, guid: b01358a59f6f9c148a8f73ab74bbfc48, type: 2}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_SortingOrder
+      value: 35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b01358a59f6f9c148a8f73ab74bbfc48, type: 2}

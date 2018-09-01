@@ -15,7 +15,17 @@ public class Player : MovableByInput
     [SerializeField]
     private Text gainScore;
 
+    [SerializeField]
+    private Text currentFish;
+
     [Space(10)]
+
+    [SerializeField]
+    private int maxFishCapacity = 15;
+
+    private int currentNumberOfFish = 0;
+
+    private int currentFishValue = 0;
 
     [SerializeField]
     private float divingVelocity = 30f;
@@ -23,7 +33,6 @@ public class Player : MovableByInput
     private float diveTurnSpeed = 2f;
     [SerializeField]
     private float cannonprimeDuration = 2f;
-
 
     private bool _fullySubmerged = false;
     public bool fullySubmerged
@@ -132,15 +141,38 @@ public class Player : MovableByInput
             .OnComplete(() =>
             {
                 GameManager.Instance.BoatReference.lockInput = false;
+
+                //Score fish
+                GameManager.Instance.UpdateScore(currentFishValue);
+
+                currentFishValue = 0;
+                currentNumberOfFish = 0;
             }
         );
         
     }
 
+    public bool isFullCapacity { get { return currentNumberOfFish >= maxFishCapacity; } }
+
     public void GainFish(fishBehavior fish)
     {
-        int score = fish.value;
-        gainScore.DOFade(1f, 0.5f);
-        
+        //Update carried fish
+        if (!isFullCapacity)
+        {
+            currentNumberOfFish++;
+            currentFishValue += fish.value;
+            currentFish.text = currentNumberOfFish + " / " + maxFishCapacity + " Capacity \n $" + currentFishValue;
+            fish.gameObject.SetActive(false);
+
+            //UI
+            int score = fish.value;
+            gainScore.text = "+ $" + fish.value;
+            gainScore.DOFade(0f, 0.0f);
+            gainScore.DOFade(1f, 0.5f);
+            Vector2 original_loc = gainScore.transform.position;
+            gainScore.transform.position = gainScore.transform.position * (Vector2.down * 5);
+            gainScore.transform.DOMove(original_loc, 0.5f);
+        }
+
     }
 }

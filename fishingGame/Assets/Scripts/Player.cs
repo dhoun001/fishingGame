@@ -43,14 +43,16 @@ public class Player : MovableByInput
     [Space(10)]
 
     [SerializeField]
+
     private float gravityShiftDifference = 0.75f;
 
     [SerializeField]
     private float divingVelocity = 30f;
+
     [SerializeField]
     private float diveTurnSpeed = 2f;
     [SerializeField]
-    private float cannonprimeDuration = 2f;
+    public float cannonprimeDuration = 2f;
 
     private Vector2 facingDirection = Vector2.right;
 

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 254fe54b79ed5474e84f287547109cf3
-timeCreated: 1535868981
+timeCreated: 1535886121
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -11,7 +11,6 @@ TextureImporter:
     21300008: downswim_sht_4
     21300010: downswim_sht_5
     21300012: downswim_sht_6
-    21300014: downswim_sht_7
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -94,9 +93,9 @@ TextureImporter:
         x: 0
         y: 0
         width: 384
-        height: 604
+        height: 608
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -105,12 +104,12 @@ TextureImporter:
       name: downswim_sht_1
       rect:
         serializedVersion: 2
-        x: 217
-        y: 603
-        width: 4
-        height: 5
+        x: 406
+        y: 0
+        width: 421
+        height: 608
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -119,12 +118,12 @@ TextureImporter:
       name: downswim_sht_2
       rect:
         serializedVersion: 2
-        x: 415
+        x: 833
         y: 0
-        width: 421
+        width: 419
         height: 608
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -133,12 +132,12 @@ TextureImporter:
       name: downswim_sht_3
       rect:
         serializedVersion: 2
-        x: 832
+        x: 1249
         y: 0
-        width: 420
+        width: 406
         height: 608
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -147,12 +146,12 @@ TextureImporter:
       name: downswim_sht_4
       rect:
         serializedVersion: 2
-        x: 1249
+        x: 1666
         y: 0
-        width: 405
+        width: 386
         height: 608
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -161,12 +160,12 @@ TextureImporter:
       name: downswim_sht_5
       rect:
         serializedVersion: 2
-        x: 1667
+        x: 2084
         y: 0
-        width: 385
-        height: 608
+        width: 353
+        height: 586
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -175,26 +174,12 @@ TextureImporter:
       name: downswim_sht_6
       rect:
         serializedVersion: 2
-        x: 2083
+        x: 2501
         y: 0
-        width: 353
-        height: 586
+        width: 334
+        height: 574
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: downswim_sht_7
-      rect:
-        serializedVersion: 2
-        x: 2503
-        y: 0
-        width: 335
-        height: 575
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

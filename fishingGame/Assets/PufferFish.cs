@@ -6,12 +6,7 @@ public class PufferFish : MonoBehaviour {
 
     private void Awake()
     {
-        StartCoroutine(Bobbing());
         ResetPosition();
-    }
-    private void Update()
-    {
-
     }
 
     private IEnumerator Bobbing()
@@ -37,8 +32,10 @@ public class PufferFish : MonoBehaviour {
     public void ResetPosition()
     {
         float rand_x = Random.Range(-13f, 13);
-        float rand_y = Random.Range(-100f, -500f);
-
+        float rand_y = Random.Range(-100f, -250f);
+        //Debug.LogWarning(rand_x + " " + rand_y);
         transform.position = new Vector3(rand_x, rand_y, transform.position.z);
+        StopAllCoroutines();
+        StartCoroutine(Bobbing());
     }
 }

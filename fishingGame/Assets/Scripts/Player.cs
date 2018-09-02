@@ -173,6 +173,7 @@ public class Player : MovableByInput
         GameManager.Instance.Tip.SetActive(false);
         GameManager.Instance.BoatReference.lockInput = true;
         yield return new WaitForSeconds(cannonprimeDuration);
+        Timer.Instance.pauseTime = false;
         spriteRenderer.DOFade(.75f, 0f);
         GameManager.Instance.FadeAmbience(false);
         GameManager.Instance.BoatReference.cannonFire.Play();
@@ -318,5 +319,6 @@ public class Player : MovableByInput
         UpdateCurrentFishText();
         spriteRenderer.size = diveDimensions;
         spriteRenderer.flipY = false;
+        Timer.Instance.pauseTime = true;
     }
 }

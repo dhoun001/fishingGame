@@ -20,6 +20,7 @@ public class Timer : Singleton<Timer> {
 	// Use this for initialization
 	void Awake () {
         currtime = 0;
+        minutes = 0;
         timeToDisplay = GetComponent<Text>();
 	}
 	
@@ -30,8 +31,9 @@ public class Timer : Singleton<Timer> {
 
         currtime += Time.deltaTime;
         minutes = (int)currtime / 60;
-        seconds = Mathf.Round(currtime * 100f) / 100f;
-        
+        seconds = currtime - (minutes * 60);
+        seconds = Mathf.Round(seconds * 100f) / 100f;
+
         if (seconds < 10){
             timeToDisplay.text = minutes + ":" + "0" + seconds;
         }

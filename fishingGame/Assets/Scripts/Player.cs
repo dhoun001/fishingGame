@@ -78,7 +78,7 @@ public class Player : MovableByInput
 
     public bool currentlyDiving = false;
 
-    private SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
     protected new void Awake()
     {
@@ -173,6 +173,7 @@ public class Player : MovableByInput
         GameManager.Instance.Tip.SetActive(false);
         GameManager.Instance.BoatReference.lockInput = true;
         yield return new WaitForSeconds(cannonprimeDuration);
+        spriteRenderer.DOFade(.75f, 0f);
         GameManager.Instance.FadeAmbience(false);
         GameManager.Instance.BoatReference.cannonFire.Play();
         GameManager.Instance.BoatReference.boxCollider.enabled = false;

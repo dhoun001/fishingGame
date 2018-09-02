@@ -160,7 +160,15 @@ public class Player : MovableByInput
     {
         sideSpear.gameObject.SetActive(true);
 
-        sideSpear.transform.localPosition = new Vector3(facingDirection.x, sideSpear.transform.localPosition.y, sideSpear.transform.localPosition.z);
+        float direction = facingDirection.x;
+        if (direction < 0)
+            direction -= lengthHitbox;
+        else
+        {
+            direction += lengthHitbox;
+        }
+        sideSpear.GetComponent<SpriteRenderer>().flipX = !(direction < 0);
+        sideSpear.transform.localPosition = new Vector3(direction, sideSpear.transform.localPosition.y, sideSpear.transform.localPosition.z);
 
         yield return new WaitForSeconds(swingSpearDuration);
         sideSpear.transform.localPosition = originalSideSpearPos;
@@ -173,6 +181,9 @@ public class Player : MovableByInput
         GameManager.Instance.Tip.SetActive(false);
         GameManager.Instance.BoatReference.lockInput = true;
         yield return new WaitForSeconds(cannonprimeDuration);
+        transform.localScale = new Vector3(1, 1, 1);
+        GetComponent<Animator>().SetInteger("state", 1);
+        spriteRenderer.sortingOrder = 5;
         Timer.Instance.pauseTime = false;
         spriteRenderer.DOFade(.75f, 0f);
         GameManager.Instance.FadeAmbience(false);
@@ -238,6 +249,10 @@ public class Player : MovableByInput
 
                 GameManager.Instance.pufferFish.ResetPosition();
                 GameManager.Instance.Tip.SetActive(true);
+
+                GetComponent<Animator>().SetInteger("state", 2);
+                transform.localScale = new Vector3(.6f, .6f, 1);
+                spriteRenderer.sortingOrder = -5;
             }
 
         )
@@ -320,5 +335,7 @@ public class Player : MovableByInput
         spriteRenderer.size = diveDimensions;
         spriteRenderer.flipY = false;
         Timer.Instance.pauseTime = true;
+        transform.localScale = new Vector3(.6f, .6f, 1);
+        spriteRenderer.sortingOrder = -5;
     }
 }

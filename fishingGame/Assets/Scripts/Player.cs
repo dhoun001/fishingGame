@@ -8,6 +8,14 @@ public class Player : MovableByInput
 {
     public AudioSource gainFishAudio;
 
+    [Space(10)]
+
+    public Vector2 diveDimensions;
+
+    public Vector2 swimmingDimensions;
+
+    [Space(10)]
+
     [SerializeField]
     private Spear sideSpear;
 
@@ -108,12 +116,13 @@ public class Player : MovableByInput
         if (input_direction.x > 0)
         {
             facingDirection = Vector2.right;
-            spriteRenderer.flipX = true;
+            spriteRenderer.flipX = !fullySubmerged;
+ 
         }
         else if (input_direction.x < 0)
         {
             facingDirection = Vector2.left;
-            spriteRenderer.flipX = false;
+            spriteRenderer.flipX = fullySubmerged;
         }
 
         //Diving inputs
@@ -151,8 +160,6 @@ public class Player : MovableByInput
     {
         sideSpear.gameObject.SetActive(true);
 
-        //sideSpear.transform.DOMove(sideSpear.transform.position + (Vector3.right * lengthHitbox), swingSpearDuration);
-
         sideSpear.transform.localPosition = new Vector3(facingDirection.x, sideSpear.transform.localPosition.y, sideSpear.transform.localPosition.z);
 
         yield return new WaitForSeconds(swingSpearDuration);
@@ -185,6 +192,9 @@ public class Player : MovableByInput
         currentlyDiving = true;
         GameManager.Instance.BoatReference.boxCollider.enabled = false;
         yield return new WaitForSeconds(cannonprimeDuration);
+        GetComponent<Animator>().SetInteger("state", 1);
+        spriteRenderer.flipY = true;
+        spriteRenderer.size = diveDimensions;
         topSpear.gameObject.SetActive(true);
         GameManager.Instance.BoatReference.lockInput = true;
         rigidBody.gravityScale = -gravityShiftDifference;
@@ -199,10 +209,13 @@ public class Player : MovableByInput
         currentlyDiving = false;
         fullySubmerged = true;
         rigidBody.gravityScale = 0f;
+        GetComponent<Animator>().SetInteger("state", 0);
+        spriteRenderer.size = swimmingDimensions;
     }
 
     public void HaltBackToSurfaceProcess()
     {
+        spriteRenderer.flipY = false;
         GameManager.Instance.FadeAmbience(true);
         topSpear.gameObject.SetActive(false);
         currentlyDiving = false;
@@ -302,5 +315,7 @@ public class Player : MovableByInput
         GetComponent<AirCapacity>().RefillAir();
         GetComponent<AirCapacity>().startAir = false;
         UpdateCurrentFishText();
+        spriteRenderer.size = diveDimensions;
+        spriteRenderer.flipY = false;
     }
 }

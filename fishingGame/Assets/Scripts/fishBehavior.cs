@@ -6,8 +6,10 @@ public class fishBehavior : MonoBehaviour {
     public static int scoreModifier = 1;
 
     public int speedmodifier = 0;
-    public int _scoreValue = 10;
-    private int scoreValue
+
+    [SerializeField]
+    private int _scoreValue = 10;
+    public int scoreValue
     {
         get { return _scoreValue * scoreModifier; }
         set { _scoreValue = value; }

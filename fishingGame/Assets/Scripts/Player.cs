@@ -277,7 +277,7 @@ public class Player : MovableByInput
         if (!isFullCapacity)
         {
             currentNumberOfFish++;
-            currentFishValue += fish._scoreValue;
+            currentFishValue += fish.scoreValue;
             UpdateCurrentFishText();
 
             if (showFishScore != null)
@@ -296,8 +296,8 @@ public class Player : MovableByInput
 
     private IEnumerator ShowFishScoreAbovePlayer(fishBehavior fish)
     {
-        int score = fish._scoreValue;
-        gainScore.text = "+ $" + fish._scoreValue;
+        int score = fish.scoreValue;
+        gainScore.text = "+ $" + fish.scoreValue;
         gainScore.DOFade(0f, 0.0f);
         gainScore.DOFade(1f, 0.5f);
 

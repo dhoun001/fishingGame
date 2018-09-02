@@ -10,6 +10,7 @@ public class WaterSurface : MonoBehaviour {
         {
             collision.gameObject.GetComponent<AirCapacity>().startAir = false;
             collision.gameObject.GetComponent<AirCapacity>().RefillAir();
+            GetComponent<AudioSource>().Play();
         }
     }
 }

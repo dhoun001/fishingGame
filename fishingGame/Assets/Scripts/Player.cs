@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Player : MovableByInput
 {
+    public AudioSource gainFishAudio;
+
     [SerializeField]
     private Spear sideSpear;
 
@@ -138,6 +140,7 @@ public class Player : MovableByInput
             }
 
             SwingingSpear = StartCoroutine(SwingSpear());
+            GetComponent<AudioSource>().Play();
         }
 
 
@@ -163,7 +166,7 @@ public class Player : MovableByInput
         GameManager.Instance.Tip.SetActive(false);
         GameManager.Instance.BoatReference.lockInput = true;
         yield return new WaitForSeconds(cannonprimeDuration);
-
+        GameManager.Instance.BoatReference.cannonFire.Play();
         GameManager.Instance.BoatReference.boxCollider.enabled = false;
         bottomSpear.gameObject.SetActive(true);
         //transform.position = transform.position + (Vector3.down * 5);
@@ -250,7 +253,7 @@ public class Player : MovableByInput
             }
             //UI
             showFishScore = StartCoroutine(ShowFishScoreAbovePlayer(fish));
-
+            gainFishAudio.Play();
         }
 
     }

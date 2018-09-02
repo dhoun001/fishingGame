@@ -9,6 +9,10 @@ using UnityEngine.UI;
 /// </summary>
 public class GameManager : Singleton<GameManager>
 {
+    public AudioSource lakeAmbience;
+
+    [Space(10)]
+
     public GameObject Tip;
 
     public PufferFish pufferFish;
@@ -81,6 +85,11 @@ public class GameManager : Singleton<GameManager>
     public void UpdateScore(int new_points)
     {
         currentScore += new_points;
+        scoreTracker.text = "$" + currentScore.ToString();
+    }
+
+    public void UpdateScore()
+    {
         scoreTracker.text = "$" + currentScore.ToString();
     }
 

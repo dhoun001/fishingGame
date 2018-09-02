@@ -18,6 +18,7 @@ public class ShopManager : MonoBehaviour {
         GameManager.Instance.PlayerReference.GetComponent<AirCapacity>().UpdateUI();
         //Select resume button
         GameObject.Find("ShopResume").GetComponent<Button>().Select();
+        GameManager.Instance.UpdateScore();
     }
 
     public void PurchasePlaqueSet(Purchasable p)
@@ -32,6 +33,7 @@ public class ShopManager : MonoBehaviour {
         fishBehavior.scoreModifier = 2;
         //Select resume button
         GameObject.Find("ShopResume").GetComponent<Button>().Select();
+        GameManager.Instance.UpdateScore();
     }
 
     public void PurchaseFishingRod(Purchasable p)
@@ -47,6 +49,7 @@ public class ShopManager : MonoBehaviour {
         GameManager.Instance.PlayerReference.UpdateCurrentFishText();
         //Select resume button
         GameObject.Find("ShopResume").GetComponent<Button>().Select();
+        GameManager.Instance.UpdateScore();
     }
 
     private void OnEnable()

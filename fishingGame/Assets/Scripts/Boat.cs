@@ -6,6 +6,8 @@ public class Boat : MovableByInput
 {
     public Transform playerPosition;
 
+    public AudioSource cannonFire;
+
     // Update is called once per frame
     void Update()
     {

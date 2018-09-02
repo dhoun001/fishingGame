@@ -199,7 +199,7 @@ public class Player : MovableByInput
 
     public void HaltBackToSurfaceProcess()
     {
-        GameManager.Instance.Tip.SetActive(true);
+
         topSpear.gameObject.SetActive(false);
         currentlyDiving = false;
         fullySubmerged = false;
@@ -216,6 +216,9 @@ public class Player : MovableByInput
                 currentFishValue = 0;
                 currentNumberOfFish = 0;
                 UpdateCurrentFishText();
+
+                GameManager.Instance.pufferFish.ResetPosition();
+                GameManager.Instance.Tip.SetActive(true);
             }
 
         )
@@ -290,5 +293,10 @@ public class Player : MovableByInput
         GameManager.Instance.BoatReference.boxCollider.enabled = true;
         lockInput = false;
         GameManager.Instance.BoatReference.lockInput = false;
+        GameManager.Instance.pufferFish.ResetPosition();
+        GameManager.Instance.Tip.SetActive(true);
+        GetComponent<AirCapacity>().RefillAir();
+        GetComponent<AirCapacity>().startAir = false;
+        UpdateCurrentFishText();
     }
 }

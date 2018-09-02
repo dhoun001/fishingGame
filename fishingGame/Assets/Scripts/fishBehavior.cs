@@ -69,7 +69,7 @@ public class fishBehavior : MonoBehaviour {
 
     private IEnumerator DeactivateSoonish()
     {
-        yield return new WaitForSeconds(30f);
+        yield return new WaitForSeconds(50f);
         setStart();
         gameObject.SetActive(false);
     }

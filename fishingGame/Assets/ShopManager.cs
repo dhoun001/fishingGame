@@ -9,6 +9,7 @@ public class ShopManager : MonoBehaviour {
     {
         if (!p.canAfford)
         {
+            GetComponent<AudioSource>().Play();
             return;
         }
         p.MakePurchase();
@@ -25,6 +26,7 @@ public class ShopManager : MonoBehaviour {
     {
         if (!p.canAfford)
         {
+            GetComponent<AudioSource>().Play();
             return;
         }
         p.MakePurchase();
@@ -40,6 +42,7 @@ public class ShopManager : MonoBehaviour {
     {
         if (!p.canAfford)
         {
+            GetComponent<AudioSource>().Play();
             return;
         }
         p.MakePurchase();
@@ -56,6 +59,7 @@ public class ShopManager : MonoBehaviour {
     {
         if (!p.canAfford)
         {
+            GetComponent<AudioSource>().Play();
             return;
         }
         p.MakePurchase();

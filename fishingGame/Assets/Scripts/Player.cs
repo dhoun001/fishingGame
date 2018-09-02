@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Player : MovableByInput
 {
     public AudioSource gainFishAudio;
+    public AudioSource deathAudio;
 
     [Space(10)]
 
@@ -315,6 +316,7 @@ public class Player : MovableByInput
         spriteRenderer.enabled = false;
         yield return new WaitForSeconds(3f);
         transform.position = GameManager.Instance.BoatReference.playerPosition.position;
+        GetComponent<Animator>().SetInteger("state", 2);
         spriteRenderer.enabled = true;
         currentFishValue = 0;
         currentNumberOfFish = 0;
@@ -337,5 +339,6 @@ public class Player : MovableByInput
         Timer.Instance.pauseTime = true;
         transform.localScale = new Vector3(.6f, .6f, 1);
         spriteRenderer.sortingOrder = -5;
+        deathAudio.Play();
     }
 }

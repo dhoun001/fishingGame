@@ -15,7 +15,7 @@ public class Timer : Singleton<Timer> {
 
     public Text endGameTimer;
 
-    public bool pauseTime = false;
+    public bool pauseTime = true;
 
 	// Use this for initialization
 	void Awake () {

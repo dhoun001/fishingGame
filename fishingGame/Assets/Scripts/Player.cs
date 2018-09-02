@@ -166,6 +166,7 @@ public class Player : MovableByInput
         GameManager.Instance.Tip.SetActive(false);
         GameManager.Instance.BoatReference.lockInput = true;
         yield return new WaitForSeconds(cannonprimeDuration);
+        GameManager.Instance.FadeAmbience(false);
         GameManager.Instance.BoatReference.cannonFire.Play();
         GameManager.Instance.BoatReference.boxCollider.enabled = false;
         bottomSpear.gameObject.SetActive(true);
@@ -202,7 +203,7 @@ public class Player : MovableByInput
 
     public void HaltBackToSurfaceProcess()
     {
-
+        GameManager.Instance.FadeAmbience(true);
         topSpear.gameObject.SetActive(false);
         currentlyDiving = false;
         fullySubmerged = false;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 /// <summary>
 /// Put global references here
@@ -10,7 +11,8 @@ using UnityEngine.UI;
 public class GameManager : Singleton<GameManager>
 {
     public AudioSource lakeAmbience;
-
+    public AudioSource boatAmbience;
+    public AudioSource diverNoises;
     [Space(10)]
 
     public GameObject Tip;
@@ -44,6 +46,22 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         UpdateScore(0);
+    }
+
+    public void FadeAmbience(bool status)
+    {
+        if(status)
+        {
+            lakeAmbience.DOFade(1f, 2f);
+            boatAmbience.DOFade(0.25f, 2f);
+            diverNoises.DOFade(0f, 2f);
+        }
+        else
+        {
+            lakeAmbience.DOFade(0f, 2f);
+            boatAmbience.DOFade(0f, 2f);
+            diverNoises.DOFade(1f, 2f);
+        }
     }
 
     private void Update()

@@ -15,6 +15,7 @@ public class EndDiving : MonoBehaviour {
                 collision.gameObject.GetComponent<Player>().HaltDivingProcess();
             else
                 collision.gameObject.GetComponent<Player>().HaltBackToSurfaceProcess();
+
         }
     }
 }

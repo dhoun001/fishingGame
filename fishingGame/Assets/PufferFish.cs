@@ -18,10 +18,10 @@ public class PufferFish : MonoBehaviour {
     {
         while(true)
         {
-            GetComponent<Rigidbody2D>().DOMoveY(transform.position.y + 1, 1f).SetEase(Ease.InOutCubic);
-            yield return new WaitForSeconds(1f);
-            GetComponent<Rigidbody2D>().DOMoveY(transform.position.y - 1, 1f).SetEase(Ease.InOutCubic);
-            yield return new WaitForSeconds(1f);
+            GetComponent<Rigidbody2D>().DOMoveY(transform.position.y + 1, 1.5f).SetEase(Ease.OutCubic);
+            yield return new WaitForSeconds(1.5f);
+            GetComponent<Rigidbody2D>().DOMoveY(transform.position.y - 1, 1.5f).SetEase(Ease.OutCubic);
+            yield return new WaitForSeconds(1.5f);
         }
 
     }

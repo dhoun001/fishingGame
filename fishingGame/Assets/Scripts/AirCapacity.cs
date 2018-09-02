@@ -14,12 +14,14 @@ public class AirCapacity : MonoBehaviour
     public int maxAir = 100;
     public float currentAir = 100;
 
+    public bool startAir = false;
+
     //How much air loss per second?
     public float durationPerUnitOfAir = 0.25f;
 
     private void Update()
     {
-        if (GameManager.Instance.PlayerReference.fullySubmerged || GameManager.Instance.PlayerReference.currentlyDiving)
+        if (startAir)
         {
             currentAir -= durationPerUnitOfAir * Time.deltaTime;
             UpdateUI();

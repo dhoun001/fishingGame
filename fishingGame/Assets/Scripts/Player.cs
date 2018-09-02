@@ -163,8 +163,12 @@ public class Player : MovableByInput
         currentlyDiving = true;
         GameManager.Instance.BoatReference.lockInput = true;
         yield return new WaitForSeconds(cannonprimeDuration);
+
+        GameManager.Instance.BoatReference.boxCollider.enabled = false;
         bottomSpear.gameObject.SetActive(true);
-        transform.position = transform.position + (Vector3.down * 2);
+        //transform.position = transform.position + (Vector3.down * 5);
+        GetComponent<AirCapacity>().startAir = true;
+       
         rigidBody.isKinematic = false;
         rigidBody.gravityScale = gravityShiftDifference;
 

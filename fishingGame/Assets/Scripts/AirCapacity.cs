@@ -47,6 +47,7 @@ public class AirCapacity : MonoBehaviour
     public void UpdateUI()
     {
         currentAir = Mathf.Clamp(currentAir, 0f, maxAir);
+        currentAir = Mathf.Round(currentAir * 100f) / 100f;
         airText.text = "Air: \n" + currentAir + " / " + maxAir;
         fillImage.fillAmount = currentAir / maxAir;
     }

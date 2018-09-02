@@ -31,7 +31,7 @@ public class Timer : Singleton<Timer> {
         currtime += Time.deltaTime;
         minutes = (int)currtime / 60;
         seconds = Mathf.Round(currtime * 100f) / 100f;
-
+        
         if (seconds < 10){
             timeToDisplay.text = minutes + ":" + "0" + seconds;
         }

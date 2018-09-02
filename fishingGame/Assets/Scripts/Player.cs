@@ -108,12 +108,12 @@ public class Player : MovableByInput
         if (input_direction.x > 0)
         {
             facingDirection = Vector2.right;
-            spriteRenderer.flipX = false;
+            spriteRenderer.flipX = true;
         }
         else if (input_direction.x < 0)
         {
             facingDirection = Vector2.left;
-            spriteRenderer.flipX = true;
+            spriteRenderer.flipX = false;
         }
 
         //Diving inputs

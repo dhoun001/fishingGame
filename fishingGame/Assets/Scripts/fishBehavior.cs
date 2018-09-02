@@ -5,6 +5,7 @@ using UnityEngine;
 public class fishBehavior : MonoBehaviour {
     public static int scoreModifier = 1;
 
+    public int speedmodifier = 0;
     public int _scoreValue = 10;
     private int scoreValue
     {
@@ -33,10 +34,10 @@ public class fishBehavior : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(isRight != true){
-            fishRb.velocity = new Vector3(speed * -1, 0, 0);
+            fishRb.velocity = new Vector3(speed * speedmodifier * -1, 0, 0);
         }
         else{
-            fishRb.velocity = new Vector3(speed, 0, 0);
+            fishRb.velocity = new Vector3(speed * speedmodifier, 0, 0);
         }
 	}
 
@@ -69,7 +70,7 @@ public class fishBehavior : MonoBehaviour {
 
     private IEnumerator DeactivateSoonish()
     {
-        yield return new WaitForSeconds(50f);
+        yield return new WaitForSeconds(90f);
         setStart();
         gameObject.SetActive(false);
     }

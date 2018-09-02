@@ -13,6 +13,8 @@ public class Timer : Singleton<Timer> {
     private float currtime;
     private float secondsMod;
 
+    public Text endGameTimer;
+
     public bool pauseTime = false;
 
 	// Use this for initialization
@@ -36,6 +38,8 @@ public class Timer : Singleton<Timer> {
         else{
             timeToDisplay.text = minutes + ":" + seconds;
         }
-	}
+        endGameTimer.text = timeToDisplay.text;
+
+    }
 
 }

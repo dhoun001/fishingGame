@@ -52,6 +52,20 @@ public class ShopManager : MonoBehaviour {
         GameManager.Instance.UpdateScore();
     }
 
+    public void PurchaseTrophy(Purchasable p)
+    {
+        if (!p.canAfford)
+        {
+            return;
+        }
+        p.MakePurchase();
+        p.button.interactable = false;
+
+        gameObject.SetActive(false);
+        GameManager.Instance.FinishGame.SetActive(true);
+        Timer.Instance.pauseTime = true;
+    }
+
     private void OnEnable()
     {
         GameManager.Instance.PlayerReference.lockInput = true;

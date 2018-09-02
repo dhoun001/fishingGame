@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Timer : MonoBehaviour {
+public class Timer : Singleton<Timer> {
 
     public int minutes;
     public float seconds;
@@ -13,6 +13,8 @@ public class Timer : MonoBehaviour {
     private float currtime;
     private float secondsMod;
 
+    public bool pauseTime = false;
+
 	// Use this for initialization
 	void Awake () {
         currtime = 0;
@@ -21,6 +23,9 @@ public class Timer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (pauseTime)
+            return;
+
         currtime += Time.deltaTime;
         minutes = (int)currtime / 60;
         seconds = Mathf.Round(currtime * 100f) / 100f;

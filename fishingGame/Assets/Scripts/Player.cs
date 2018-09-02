@@ -248,7 +248,9 @@ public class Player : MovableByInput
                 currentNumberOfFish = 0;
                 UpdateCurrentFishText();
 
-                GameManager.Instance.pufferFish.ResetPosition();
+                PufferFish[] pf = FindObjectsOfType<PufferFish>();
+                foreach (PufferFish p in pf)
+                    p.ResetPosition();
                 GameManager.Instance.Tip.SetActive(true);
 
                 GetComponent<Animator>().SetInteger("state", 2);
@@ -314,22 +316,26 @@ public class Player : MovableByInput
     {
         lockInput = true;
         spriteRenderer.enabled = false;
+        deathAudio.Play();
+        topSpear.gameObject.SetActive(false);
+        bottomSpear.gameObject.SetActive(false);
+        topSpear.gameObject.SetActive(false);
         yield return new WaitForSeconds(3f);
         transform.position = GameManager.Instance.BoatReference.playerPosition.position;
         GetComponent<Animator>().SetInteger("state", 2);
         spriteRenderer.enabled = true;
         currentFishValue = 0;
         currentNumberOfFish = 0;
-        topSpear.gameObject.SetActive(false);
-        bottomSpear.gameObject.SetActive(false);
-        topSpear.gameObject.SetActive(false);
+        rigidBody.Sleep();
         currentlyDiving = false;
         fullySubmerged = false;
         rigidBody.gravityScale = 0f;
         GameManager.Instance.BoatReference.boxCollider.enabled = true;
         lockInput = false;
         GameManager.Instance.BoatReference.lockInput = false;
-        GameManager.Instance.pufferFish.ResetPosition();
+        PufferFish[] pf = FindObjectsOfType<PufferFish>();
+        foreach (PufferFish p in pf)
+            p.ResetPosition();
         GameManager.Instance.Tip.SetActive(true);
         GetComponent<AirCapacity>().RefillAir();
         GetComponent<AirCapacity>().startAir = false;
@@ -339,6 +345,6 @@ public class Player : MovableByInput
         Timer.Instance.pauseTime = true;
         transform.localScale = new Vector3(.6f, .6f, 1);
         spriteRenderer.sortingOrder = -5;
-        deathAudio.Play();
+
     }
 }

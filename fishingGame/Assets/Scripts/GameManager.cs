@@ -19,8 +19,6 @@ public class GameManager : Singleton<GameManager>
 
     public GameObject Tip;
 
-    public PufferFish pufferFish;
-
     [SerializeField]
     private GameObject shopMenu;
 

@@ -23,8 +23,7 @@ public class Player : MovableByInput
 
     [Space(10)]
 
-    [SerializeField]
-    private int maxFishCapacity = 15;
+    public int maxFishCapacity = 15;
 
     private int currentNumberOfFish = 0;
 
@@ -161,6 +160,7 @@ public class Player : MovableByInput
     private IEnumerator DivingProcess(float velocity)
     {
         currentlyDiving = true;
+        GameManager.Instance.Tip.SetActive(false);
         GameManager.Instance.BoatReference.lockInput = true;
         yield return new WaitForSeconds(cannonprimeDuration);
 
@@ -199,6 +199,7 @@ public class Player : MovableByInput
 
     public void HaltBackToSurfaceProcess()
     {
+        GameManager.Instance.Tip.SetActive(true);
         topSpear.gameObject.SetActive(false);
         currentlyDiving = false;
         fullySubmerged = false;
@@ -214,12 +215,17 @@ public class Player : MovableByInput
 
                 currentFishValue = 0;
                 currentNumberOfFish = 0;
-                currentFish.text = currentNumberOfFish + " / " + maxFishCapacity + " Capacity \n $" + currentFishValue;
+                UpdateCurrentFishText();
             }
 
         )
         .SetEase(Ease.InExpo);
         
+    }
+
+    public void UpdateCurrentFishText()
+    {
+        currentFish.text = currentNumberOfFish + " / " + maxFishCapacity + " Capacity \n $" + currentFishValue;
     }
 
     public bool isFullCapacity { get { return currentNumberOfFish >= maxFishCapacity; } }
@@ -231,8 +237,8 @@ public class Player : MovableByInput
         if (!isFullCapacity)
         {
             currentNumberOfFish++;
-            currentFishValue += fish.value;
-            currentFish.text = currentNumberOfFish + " / " + maxFishCapacity + " Capacity \n $" + currentFishValue;
+            currentFishValue += fish._scoreValue;
+            UpdateCurrentFishText();
 
             if (showFishScore != null)
             {
@@ -250,8 +256,8 @@ public class Player : MovableByInput
 
     private IEnumerator ShowFishScoreAbovePlayer(fishBehavior fish)
     {
-        int score = fish.value;
-        gainScore.text = "+ $" + fish.value;
+        int score = fish._scoreValue;
+        gainScore.text = "+ $" + fish._scoreValue;
         gainScore.DOFade(0f, 0.0f);
         gainScore.DOFade(1f, 0.5f);
 

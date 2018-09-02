@@ -9,13 +9,18 @@ using UnityEngine.UI;
 /// </summary>
 public class GameManager : Singleton<GameManager>
 {
+    public GameObject Tip;
+
+    [SerializeField]
+    private GameObject shopMenu;
+
     [SerializeField]
     private Text scoreTracker;
 
     [SerializeField]
     private GameObject menu;
 
-    private int currentScore = 0;
+    public int currentScore = 0;
 
     [Space(10)]
 
@@ -39,6 +44,12 @@ public class GameManager : Singleton<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if (shopMenu.activeInHierarchy)
+            {
+                shopMenu.gameObject.SetActive(false);
+                return;
+            }
+
             menu.gameObject.SetActive(!menu.gameObject.activeInHierarchy);
             SetGameStatus(!menu.gameObject.activeInHierarchy);
             if (menu.gameObject.activeInHierarchy)
@@ -47,6 +58,21 @@ public class GameManager : Singleton<GameManager>
                 if (select != null)
                     select.Select();
             }
+            return;
+        }
+
+        //Open shopmenu
+        if (Input.GetKeyDown(KeyCode.S) && !PlayerReference.currentlyDiving && !PlayerReference.fullySubmerged)
+        {
+            if (shopMenu.activeInHierarchy)
+            {
+                shopMenu.gameObject.SetActive(false);
+                return;
+            }
+
+            shopMenu.gameObject.SetActive(true);
+            //Select resume button
+            GameObject.Find("ShopResume").GetComponent<Button>().Select();
         }
     }
 

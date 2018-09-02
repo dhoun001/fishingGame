@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class fishBehavior : MonoBehaviour {
+    public static int scoreModifier = 1;
 
-    public int value = 10;
+    public int _scoreValue = 10;
+    private int scoreValue
+    {
+        get { return _scoreValue * scoreModifier; }
+        set { _scoreValue = value; }
+    }
 
     private bool isRight;
     private float speed;

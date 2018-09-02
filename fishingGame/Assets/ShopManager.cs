@@ -45,7 +45,7 @@ public class ShopManager : MonoBehaviour {
         p.MakePurchase();
         p.button.interactable = false;
 
-        GameManager.Instance.PlayerReference.maxFishCapacity += 20;
+        GameManager.Instance.PlayerReference.maxFishCapacity += 30;
         GameManager.Instance.PlayerReference.UpdateCurrentFishText();
         //Select resume button
         GameObject.Find("ShopResume").GetComponent<Button>().Select();

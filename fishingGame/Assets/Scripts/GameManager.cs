@@ -15,6 +15,8 @@ public class GameManager : Singleton<GameManager>
     public AudioSource diverNoises;
     [Space(10)]
 
+    public GameObject FinishGame;
+
     public GameObject Tip;
 
     public PufferFish pufferFish;
